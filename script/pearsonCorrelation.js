@@ -56,11 +56,11 @@ const users = {
 console.log('User-centric data ', users)
 
 // Returns the Pearson correlation coefficient for item1 and item2
-const simPearson = (prefs, p1, p2) => {
-  // Find the items that are rated by both users, p1 and p2
+const simPearson = (prefs, m1, m2) => {
+  // Find the items that are rated by both users, m1 and m2
   const si = {} // object to store the mutually rated items
-  for (const item in prefs[p1]) {
-    if (item in prefs[p2]) {
+  for (const item in prefs[m1]) {
+    if (item in prefs[m2]) {
       si[item] = 1
     }
   }
@@ -75,40 +75,40 @@ const simPearson = (prefs, p1, p2) => {
   let sum1 = 0
   // Adds up all the preferences
   for (let it in si) {
-    if (it in prefs[p1]) {
-      sum1 += prefs[p1][it]
+    if (it in prefs[m1]) {
+      sum1 += prefs[m1][it]
     }
   }
   let sum2 = 0
   // Adds up all the preferences
   for (let it in si) {
-    if (it in prefs[p2]) {
-      sum2 += prefs[p2][it]
+    if (it in prefs[m2]) {
+      sum2 += prefs[m2][it]
     }
   }
 // Sum up all the squares
   let sumSq1 = 0
   // Adds up all the preferences
   for (let it in si) {
-    if (it in prefs[p1]) {
-      sumSq1 += Math.pow(prefs[p1][it], 2)
+    if (it in prefs[m1]) {
+      sumSq1 += Math.pow(prefs[m1][it], 2)
     }
   }
 // Sum up all the squares
   let sumSq2 = 0
   // Adds up all the preferences
   for (let it in si) {
-    if (it in prefs[p2]) {
-      sumSq2 += Math.pow(prefs[p2][it], 2)
+    if (it in prefs[m2]) {
+      sumSq2 += Math.pow(prefs[m2][it], 2)
     }
   }
   // Sum up the products
   let pSum = 0
     // Adds up all the preferences
-    //  sum1=sum([prefs[p1][it] for it in si])
+    //  sum1=sum([prefs[m1][it] for it in si])
   for (let it in si) {
-    if (it in prefs[p1] && it in prefs[p2]) {
-      pSum += (prefs[p1][it] * prefs[p2][it])
+    if (it in prefs[m1] && it in prefs[m2]) {
+      pSum += (prefs[m1][it] * prefs[m2][it])
     }
   }
     // Calculate the Pearson score
