@@ -12,7 +12,6 @@ class RecommendedItems extends Component {
 
   render(){
     const {recommendations} = this.props
-    console.log(recommendations)
     return (
       <div>
         <h4>Your Meal Recommendations</h4>

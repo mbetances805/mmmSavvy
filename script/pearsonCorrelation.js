@@ -1,60 +1,61 @@
 'use strict'
 
-const critics = {
-  'Lisa Rose': {
-    'Lady in the Water': 2.5,
-    'Snakes on a Plane': 3.5,
-    'Just My Luck': 3.0,
-    'Superman Returns': 3.5,
-    'You, Me and Dupree': 2.5,
-    'The Night Listener': 3.0
+// Test Data
+const users = {
+  'Maria Betances': {
+    'Vegan Burger': 4.0,
+    'Peanut Tofu': 3.5,
+    'Midtown Melt': 3.0,
+    'Spicy Buffalo Bun': 3.5,
+    'Sloppy Jack': 2.5,
+    'Soup du Jour': 3.0
   },
-  'Gene Seymour': {
-    'Lady in the Water': 3.0,
-    'Snakes on a Plane': 3.5,
-    'Just My Luck': 1.5,
-    'Superman Returns': 5.0,
-    'The Night Listener': 3.0,
-    'You, Me and Dupree': 3.5
+  'Carlos Bautista': {
+    'Vegan Burger': 3.0,
+    'Peanut Tofu': 3.5,
+    'Midtown Melt': 1.5,
+    'Spicy Buffalo Bun': 5.0,
+    'Soup du Jour': 3.0,
+    'Sloppy Jack': 3.5
   },
   'Michael Phillips': {
-    'Lady in the Water': 2.5,
-    'Snakes on a Plane': 3.0,
-    'Superman Returns': 3.5,
-    'The Night Listener': 4.0
+    'Vegan Burger': 2.5,
+    'Peanut Tofu': 3.0,
+    'Spicy Buffalo Bun': 3.5,
+    'Soup du Jour': 4.0
   },
   'Claudia Puig': {
-    'Snakes on a Plane': 3.5,
-    'Just My Luck': 3.0,
-    'The Night Listener': 4.5,
-    'Superman Returns': 4.0,
-    'You, Me and Dupree': 2.5
+    'Peanut Tofu': 3.5,
+    'Midtown Melt': 3.0,
+    'Soup du Jour': 4.5,
+    'Spicy Buffalo Bun': 4.0,
+    'Sloppy Jack': 2.5
   },
   'Mick LaSalle': {
-    'Lady in the Water': 3.0,
-    'Snakes on a Plane': 4.0,
-    'Just My Luck': 2.0,
-    'Superman Returns': 3.0,
-    'The Night Listener': 3.0,
-    'You, Me and Dupree': 2.0
+    'Vegan Burger': 3.0,
+    'Peanut Tofu': 4.0,
+    'Midtown Melt': 2.0,
+    'Spicy Buffalo Bun': 3.0,
+    'Soup du Jour': 3.0,
+    'Sloppy Jack': 2.0
   },
   'Jack Matthews': {
-    'Lady in the Water': 3.0,
-    'Snakes on a Plane': 4.0,
-    'The Night Listener': 3.0,
-    'Superman Returns': 5.0,
-    'You, Me and Dupree': 3.5
+    'Vegan Burger': 3.0,
+    'Peanut Tofu': 4.0,
+    'Soup du Jour': 3.0,
+    'Spicy Buffalo Bun': 5.0,
+    'Sloppy Jack': 3.5
   },
   'Toby': {
-    'Snakes on a Plane': 4.5,
-    'You, Me and Dupree': 1.0,
-    'Superman Returns': 4.0
+    'Peanut Tofu': 4.5,
+    'Sloppy Jack': 1.0,
+    'Spicy Buffalo Bun': 4.0
   }
 }
 
 // Returns the Pearson correlation coefficient for p1 and p2
 const simPearson = (prefs, p1, p2) => {
-  // Find the items that are rated by both critics, p1 and p2
+  // Find the items that are rated by both users, p1 and p2
   const si = {} // object to store the mutually rated items
   for (const item in prefs[p1]) {
     if (item in prefs[p2]) {
@@ -251,7 +252,7 @@ const calculateSimilarItems = (prefs, n = 10) => {
 }
 
 export const getRecommendedItems = (itemMatch, user) => {
-  let prefs = critics
+  let prefs = users
   let userRatings = prefs[user]
   let scores = {}
   let totalSim = {}
@@ -299,10 +300,10 @@ export const getRecommendedItems = (itemMatch, user) => {
 //   }
 // }
 
-// const movies = transformPrefs(critics)
-// let r = simDistance(critics, 'Lisa Rose', 'Gene Seymour')
-// let r = calculateSimilarItems(critics)
-const itemSim = calculateSimilarItems(critics)
+// const movies = transformPrefs(users)
+// let r = simDistance(users, 'Lisa Rose', 'Gene Seymour')
+// let r = calculateSimilarItems(users)
+const itemSim = calculateSimilarItems(users)
 export const get = getRecommendedItems(itemSim, 'Michael Phillips')
 // loadMovieLens()
 console.log('getRecommendedItems Function', get)
