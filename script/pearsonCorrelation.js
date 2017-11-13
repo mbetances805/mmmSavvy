@@ -18,20 +18,20 @@ const users = {
     'Soup du Jour': 3.0,
     'Sloppy Jack': 3.5
   },
-  'Michael Phillips': {
+  'Katherine Mushlin': {
     'Vegan Burger': 2.5,
     'Peanut Tofu': 3.0,
     'Spicy Buffalo Bun': 3.5,
     'Soup du Jour': 4.0
   },
-  'Claudia Puig': {
+  'Melving Hidalgo': {
     'Peanut Tofu': 3.5,
     'Midtown Melt': 3.0,
     'Soup du Jour': 4.5,
     'Spicy Buffalo Bun': 4.0,
     'Sloppy Jack': 2.5
   },
-  'Mick LaSalle': {
+  'Yesenia Casabuena': {
     'Vegan Burger': 3.0,
     'Peanut Tofu': 4.0,
     'Midtown Melt': 2.0,
@@ -39,21 +39,21 @@ const users = {
     'Soup du Jour': 3.0,
     'Sloppy Jack': 2.0
   },
-  'Jack Matthews': {
+  'Ben Mushlin': {
     'Vegan Burger': 3.0,
     'Peanut Tofu': 4.0,
     'Soup du Jour': 3.0,
     'Spicy Buffalo Bun': 5.0,
     'Sloppy Jack': 3.5
   },
-  'Toby': {
+  'Thea Stone': {
     'Peanut Tofu': 4.5,
     'Sloppy Jack': 1.0,
     'Spicy Buffalo Bun': 4.0
   }
 }
 
-// Returns the Pearson correlation coefficient for p1 and p2
+// Returns the Pearson correlation coefficient for item1 and item2
 const simPearson = (prefs, p1, p2) => {
   // Find the items that are rated by both users, p1 and p2
   const si = {} // object to store the mutually rated items
@@ -62,8 +62,6 @@ const simPearson = (prefs, p1, p2) => {
       si[item] = 1
     }
   }
-
-  // Find the length of our array
   let n = 0
   // If there are no ratings in common, return 0
   for (let key in si) {
@@ -130,7 +128,7 @@ const simPearson = (prefs, p1, p2) => {
   return pearsonScore
 }
 
-// Returns the best matches for persom from prefs object
+// Returns the best matches for person from prefs object
 // Number of results and similarity function are optional params
 const topMatches = (prefs, person, n, similarity = simPearson) => {
   let scores = []
@@ -140,19 +138,13 @@ const topMatches = (prefs, person, n, similarity = simPearson) => {
       scores.push([pScore, critic])
     }
   }
-  // const sortFunction = (a, b) => {
-  //   if (a[0] === b[0]) {
-  //     return 0
-  //   } else {
-  //     return (a[0] > b[0] ? -1 : 1)
-  //   }
-  // }
   scores.sort()
   scores.reverse()
-  return scores.slice(0, n + 1)
+  console.log('(topMatches)Returns the top matches based on the Pearson Correlation Coefficient', person, scores)
+  return scores.slice(0, n)
 }
 
-// Get recommendations for a person by using a weighted average
+// User-based Get recommendations for a person by using a weighted average
 // of every other user's rankings
 const getRecommendations = (prefs, person, similarity = simPearson) => {
   let totals = {}
@@ -195,7 +187,7 @@ const getRecommendations = (prefs, person, similarity = simPearson) => {
   return rankings
 }
 
-// Try recursion
+// Transform the user object to be item-centric
 const transformPrefs = (prefs) => {
   let result = {}
   for (let person in prefs) {
@@ -208,9 +200,10 @@ const transformPrefs = (prefs) => {
       }
     }
   }
+  console.log('(transformPrefs)Transformed user object to be item-centric: ', result)
   return result
 }
-
+// Correlation based on k-means clustering
 const simDistance = (prefs, person1, person2) => {
   let si = {}
   for (let item in prefs[person1]) {
@@ -236,7 +229,7 @@ const simDistance = (prefs, person1, person2) => {
 }
 
 // Building the Item Comparison Dataset
-const calculateSimilarItems = (prefs, n = 10) => {
+const calculateSimilarItems = (prefs, n = 2) => {
   // Create a object of items howing which other items they are most similar to
   let result = {}
   let scores = []
@@ -244,13 +237,14 @@ const calculateSimilarItems = (prefs, n = 10) => {
   let itemPrefs = transformPrefs(prefs)
   // Find the most similar items to this one
   for (let item in itemPrefs) {
-    scores = topMatches(itemPrefs, item, n, simDistance)
+    scores = topMatches(itemPrefs, item, n, simPearson)
     result[item] = scores
-    // console.log(result)
   }
+  console.log('(calculateSimilarItems) returns the top 2 matches (results from Pearson correlation closer to 1 for positive correlation)', result)
   return result
 }
 
+// Item-based getting recommendations
 export const getRecommendedItems = (itemMatch, user) => {
   let prefs = users
   let userRatings = prefs[user]
@@ -279,7 +273,6 @@ export const getRecommendedItems = (itemMatch, user) => {
       }
     }
   }
-
   // Divide each total score by total weighting to get an average
   let rankings = []
   for (let item in scores) {
@@ -287,23 +280,8 @@ export const getRecommendedItems = (itemMatch, user) => {
   }
   rankings.sort()
   rankings.reverse()
+  console.log('(getRecommendedItems) predicts that ', user, ' will rate the following meals as follows... ', rankings)
   return rankings
 }
-
-// const loadMovieLens = (path = '../data/') => {
-//   // Get movie titles
-//   let movies = {}
-//   for (let line in FileReader(path + '/u.data')) {
-//     let [id, title] = line.split('|')
-//     movies[id] = title
-//     console.log('movielends id title test', id, title)
-//   }
-// }
-
-// const movies = transformPrefs(users)
-// let r = simDistance(users, 'Lisa Rose', 'Gene Seymour')
-// let r = calculateSimilarItems(users)
 const itemSim = calculateSimilarItems(users)
-export const get = getRecommendedItems(itemSim, 'Michael Phillips')
-// loadMovieLens()
-console.log('getRecommendedItems Function', get)
+export const get = getRecommendedItems(itemSim, 'Katherine Mushlin')
