@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchRecommendations} from '../store'
-import {get, getRecommendedItems} from '../../server/db/pearsonCorrelation'
+import {get, getRecommendedItems} from '../../script/pearsonCorrelation'
 import {Link} from 'react-router-dom'
 
 class RecommendedItems extends Component {
