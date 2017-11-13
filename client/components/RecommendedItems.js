@@ -18,11 +18,11 @@ class RecommendedItems extends Component {
         {
           recommendations.map(recommendation => {
             return (
-              <span key={recommendation.id}>
+              <div key={recommendation.id}>
                 <span><strong>{recommendation.meal.name}</strong></span><br />
                 <span>{recommendation.recommendationScore}</span><br />
                 <img src={recommendation.meal.image} width="250" height="300" />
-              </span>
+              </div>
             )
           })
         }
