@@ -53,6 +53,8 @@ const users = {
   }
 }
 
+console.log('Dummy Data ', users)
+
 // Returns the Pearson correlation coefficient for item1 and item2
 const simPearson = (prefs, p1, p2) => {
   // Find the items that are rated by both users, p1 and p2
@@ -67,11 +69,9 @@ const simPearson = (prefs, p1, p2) => {
   for (let key in si) {
     n++
   }
-
   if (n === 0) {
     return 0
   }
-
   let sum1 = 0
   // Adds up all the preferences
   for (let it in si) {
@@ -79,7 +79,6 @@ const simPearson = (prefs, p1, p2) => {
       sum1 += prefs[p1][it]
     }
   }
-
   let sum2 = 0
   // Adds up all the preferences
   for (let it in si) {
@@ -87,7 +86,6 @@ const simPearson = (prefs, p1, p2) => {
       sum2 += prefs[p2][it]
     }
   }
-
 // Sum up all the squares
   let sumSq1 = 0
   // Adds up all the preferences
@@ -96,7 +94,6 @@ const simPearson = (prefs, p1, p2) => {
       sumSq1 += Math.pow(prefs[p1][it], 2)
     }
   }
-
 // Sum up all the squares
   let sumSq2 = 0
   // Adds up all the preferences
@@ -105,7 +102,6 @@ const simPearson = (prefs, p1, p2) => {
       sumSq2 += Math.pow(prefs[p2][it], 2)
     }
   }
-
   // Sum up the products
   let pSum = 0
     // Adds up all the preferences
@@ -115,7 +111,6 @@ const simPearson = (prefs, p1, p2) => {
       pSum += (prefs[p1][it] * prefs[p2][it])
     }
   }
-
     // Calculate the Pearson score
   let numerator = (pSum) - (sum1 * sum2 / n)
   let denominator = Math.sqrt((sumSq1 - Math.pow(sum1, 2) / n) *
