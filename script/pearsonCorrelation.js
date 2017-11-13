@@ -53,7 +53,7 @@ const users = {
   }
 }
 
-console.log('Dummy Data ', users)
+console.log('User-centric data ', users)
 
 // Returns the Pearson correlation coefficient for item1 and item2
 const simPearson = (prefs, p1, p2) => {
@@ -135,7 +135,7 @@ const topMatches = (prefs, person, n, similarity = simPearson) => {
   }
   scores.sort()
   scores.reverse()
-  console.log('(topMatches)Returns the top matches based on the Pearson Correlation Coefficient', person, scores)
+  console.log('(topMatches)Returns the Pearson Correlation Coefficient for each meal ', person, scores)
   return scores.slice(0, n)
 }
 
@@ -195,7 +195,7 @@ const transformPrefs = (prefs) => {
       }
     }
   }
-  console.log('(transformPrefs)Transformed user object to be item-centric: ', result)
+  console.log('(transformPrefs)Transformed user object to be meal-centric: ', result)
   return result
 }
 // Correlation based on k-means clustering
@@ -235,7 +235,7 @@ const calculateSimilarItems = (prefs, n = 2) => {
     scores = topMatches(itemPrefs, item, n, simPearson)
     result[item] = scores
   }
-  console.log('(calculateSimilarItems) returns the top 2 matches (results from Pearson correlation closer to 1 for positive correlation)', result)
+  // console.log('(calculateSimilarItems) returns the top 2 matches (results from Pearson correlation closer to 1 for positive correlation)', result)
   return result
 }
 
@@ -280,3 +280,4 @@ export const getRecommendedItems = (itemMatch, user) => {
 }
 const itemSim = calculateSimilarItems(users)
 export const get = getRecommendedItems(itemSim, 'Katherine Mushlin')
+console.log('recommendation: ∑(each similarity score * the users ratings for each meal) / ∑(each similarity score)')
