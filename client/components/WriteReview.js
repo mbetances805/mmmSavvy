@@ -1,53 +1,28 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
-import { postReview, createReview, fetchSingleProduct } from '../store'
+import { postReview, createReview, fetchSingleMeal } from '../store'
 import history from '../history'
 
-class WriteReview extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      submitVisible: false,
-    }
-  }
-
-  componentDidMount(){
-    const {id} = this.props.match.params
-    this.props.getProduct(id)
-    this.handleChange = this.handleChange.bind(this)
-    this.handleRedirect = this.handleRedirect.bind(this)
-    if (this.props.userId) {
-      this.setState({submitVisible: true})
-    }
-  }
-
-  handleChange (event) {
-    this.props.review[event.target.name] = event.target.value
-    this.props.newReview(this.props.review)
-  }
-
-  handleRedirect (review, evt) {
-    const { productId } = this.props
-    if (!this.props.review.title || !this.props.review.stars || !this.props.review.message){
-      evt.preventDefault()
-      alert('Please populate all fields in the Review form.')
-    } else {
-      this.props.handleSubmit(review, evt)
-      history.push(`/products/${productId}/reviews`)
-
-    }
-  }
-
-
-  render (){
-    const {review, productId, product, userId} = this.props
-    if (productId && userId){
-      review.productId = productId
-      review.userId = userId
-    }
+const WriteReview = (props) => {
+  // const handleChange = (event) => {
+  //   this.props.review[event.target.name] = event.target.value
+  //   this.props.newReview(this.props.review)
+  // }
+  //
+  // const handleRedirect = (review, evt) => {
+  //   const { productId } = this.props
+  //   if (!this.props.review.comment || !this.props.review.rating){
+  //     evt.preventDefault()
+  //     alert('Please populate all fields.')
+  //   } else {
+  //     this.props.handleSubmit(review, evt)
+  //     history.push(`/restaurants/${restaurantId}/meals/${id}`)
+  //
+  //   }
+  // }
+  console.log(props)
     return (
       <div>
-        <h3>{product.name}</h3>
         <h4>Write Your Review</h4>
         <form onSubmit={evt => this.handleRedirect(review, evt)}>
           <label htmlFor='title'>Title</label>
@@ -87,30 +62,19 @@ class WriteReview extends Component {
         <hr />
       </div>
     )
-  }
-}
 
-const mapState = (state) => {
-  return {
-    productId: state.product.selectedProduct.id,
-    product: state.product.selectedProduct,
-    review: state.review,
-    userId: state.user.id,
-  }
 }
+const mapState = null
 
 const mapDispatch = function (dispatch) {
   return {
     getProduct (id) {
-      dispatch(fetchSingleProduct(id))
+      dispatch(fetchSingleMeal(id))
     },
     handleSubmit (review, evt) {
       evt.preventDefault()
       dispatch(postReview(review))
       dispatch(createReview({}))
-    },
-    newReview (newreview) {
-      dispatch(createReview(newreview))
     }
   }
 }

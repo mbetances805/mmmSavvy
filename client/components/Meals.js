@@ -18,8 +18,8 @@ class Meals extends Component {
       {
         restaurant.meals && restaurant.meals.map(meal => {
           return (
-            <div key={meal.id}><Link to={`/restaurants/${restaurant.id}/meals/${meal.id}`}>{meal.name}</Link> <br />
-            <img src={meal.image} width="250"/>
+            <div key={meal.id}><Link to={`/restaurants/${restaurant.id}/meals/${meal.id}`}>{meal.name}</Link><br />
+            <img src={meal.image} width="250" />
             </div>
           )
         })

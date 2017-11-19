@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Meal} = require('../db/models')
+const {Meal, Review} = require('../db/models')
 module.exports = router
 
 router.get('/', (req, res, next) => {
@@ -16,5 +16,11 @@ router.get('/:id', (req, res, next) => {
     include: [{all: true}]
   })
     .then(restaurant => res.json(restaurant))
+    .catch(next)
+})
+
+router.post('/:id', (req, res, next) => {
+  Review.create(req.body, {returning: true})
+    .then(review => res.json(review))
     .catch(next)
 })

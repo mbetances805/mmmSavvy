@@ -13,7 +13,7 @@ export const deleteReview = review => ({type: DELETE_REVIEW, review})
 // THUNK CREATORS
 export function postReview (review) {
   return function thunk (dispatch) {
-    return axios.post(`/api/restaurant/${review.restaurantId}/review`, review)
+    return axios.post(`/api/review/${review.mealId}`, review)
       .then(res => {
         dispatch(getReview(res.data));
       }
@@ -24,7 +24,7 @@ export function postReview (review) {
 
 export function removePost (review) {
   return function thunk (dispatch) {
-    return axios.delete(`/api/restaurant/${review.restaurantId}/meal/${review.id}`, review)
+    return axios.delete(`/api/review/${review.mealId}`, review)
       .then(res => dispatch(deleteReview(res.data)))
       .catch(err => console.error('Issue removing review', err))
   }

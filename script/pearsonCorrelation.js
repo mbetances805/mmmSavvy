@@ -49,7 +49,8 @@ const users = {
   'Thea Stone': {
     'Peanut Tofu': 4.5,
     'Sloppy Jack': 1.0,
-    'Spicy Buffalo Bun': 4.0
+    'Spicy Buffalo Bun': 1.0,
+    'Midtown Melt': 4.0,
   }
 }
 
@@ -271,7 +272,7 @@ export const getRecommendedItems = (itemMatch, user) => {
   // Divide each total score by total weighting to get an average
   let rankings = []
   for (let item in scores) {
-    rankings.push([scores[item] / totalSim[item], item])
+    rankings.push([parseFloat(scores[item] / totalSim[item]).toFixed(1), item])
   }
   rankings.sort()
   rankings.reverse()
@@ -279,5 +280,5 @@ export const getRecommendedItems = (itemMatch, user) => {
   return rankings
 }
 const itemSim = calculateSimilarItems(users)
-export const get = getRecommendedItems(itemSim, 'Katherine Mushlin')
+export const get = getRecommendedItems(itemSim, 'Thea Stone')
 console.log('recommendation: ∑(each similarity score * the users ratings for each meal) / ∑(each similarity score)')
