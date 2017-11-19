@@ -27,7 +27,7 @@ class Routes extends Component {
             {/* Routes placed here are available to all visitors */}
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
-            <Route path="review" component={WriteReview} />
+            <Route path="/review" component={WriteReview} />
             <Route exact path="/restaurants" component={Restaurants} />
             <Route exact path="/restaurants/:id/" component={Meals} />
             <Route exact path="/restaurants/:id/meals/:id" component={SingleMeal} />
