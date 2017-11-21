@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchRestaurants} from '../store'
 import {Link} from 'react-router-dom'
+import { SearchBar } from './SearchBar'
 
 class Restaurants extends Component {
   componentDidMount(){
@@ -12,6 +13,7 @@ class Restaurants extends Component {
     const {restaurants} = this.props
     return (
       <div>
+        <SearchBar />
         <h4><Link to="/recommendations">View Recommended Meals</Link></h4>
         <span>List of Visited Restaurants</span> <br />
         {
